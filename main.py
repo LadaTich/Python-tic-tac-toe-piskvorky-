@@ -53,41 +53,50 @@ def is_it_end():
             o_wins = True
     
     if x_wins:
-        print("X wins!")
+        print("\nX wins!\n")
         return True
     elif o_wins:
-        print("O wins!")
+        print("\nO wins!\n")
         return True
     else: 
         return False
 
 def play(mark):
-    user_coordinates = [*input(f"Player: {mark}\nType a coordinates:  ").lower()]
+    user_coordinates = [*input(f"\nPlayer: {mark}\nType a coordinates:  ").lower()]
 
-    user_row = user_coordinates[0]
-    user_column = int(user_coordinates[1])
+    try:
+        user_row = user_coordinates[0]
+        user_column = user_coordinates[1]
+    except IndexError:
+        print("\nWrong input. You have to choose from a/b/c rows and 0/1/2 columns.\nTry it again.\n")
+        play(mark)
 
-    if user_column == 0:
-        user_column = 1
-    elif user_column == 1:
-        user_column = 3
-    elif user_column == 2:
-        user_column = 5
+    if user_row == "a" or user_row == "b" or user_row == "c" and user_column == "0" or user_column == "1" or user_column == "2":
+        user_column = int(user_column)
 
-    affected_row = game_area[user_row]
-    affected_row[user_column] = mark
+        if user_column == 0:
+            user_column = 1
+        elif user_column == 1:
+            user_column = 3
+        elif user_column == 2:
+            user_column = 5
 
-    print(f'{" ".join(game_area["a"])}\n{" ".join(game_area["b"])}\n{" ".join(game_area["c"])}\n')
+        affected_row = game_area[user_row]
+        affected_row[user_column] = mark
+    else:
+        print("\nWrong input. You have to choose from a/b/c rows and 0/1/2 columns.\nTry it again.\n")
+        play(mark)
 
 
 while end == False:
 
-    print(f'{" ".join(game_area["a"])}\n{" ".join(game_area["b"])}\n{" ".join(game_area["c"])}\n')
+    print(f'\n{" ".join(game_area["a"])}\n{" ".join(game_area["b"])}\n{" ".join(game_area["c"])}\n')
 
     play("X")
 
     end = is_it_end()
 
     if end == False:
+        print(f'\n{" ".join(game_area["a"])}\n{" ".join(game_area["b"])}\n{" ".join(game_area["c"])}\n')
         play("O")
         end = is_it_end()
