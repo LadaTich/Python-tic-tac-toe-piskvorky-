@@ -1,24 +1,68 @@
-# a = [*"| | | |"]
-# b = [*"| | | |"]
-# c = [*"| | | |"]
 
 game_area = {
     "a" : [*"| | | |"],
     "b" : [*"| | | |"],
     "c" : [*"| | | |"]
 }
-# 0,4,8
+
 end = False
-# putting into ui
 
 def is_it_end():
-    if game_area["a"][0] == game_area["a"][1] == game_area["a"][2]:
-        if game_area["a"][0] == "X":
-            print("\nX wins!\n")
+    x_wins = False
+    o_wins = False
 
-while end == False:
+    if game_area["a"][1] == game_area["a"][3] == game_area["a"][5]:
+        if game_area["a"][1] == "X":
+            x_wins = True
+        elif game_area["a"][1] == "O":
+            o_wins = True
+    elif game_area["b"][1] == game_area["b"][3] == game_area["b"][5]:
+        if game_area["b"][1] == "X":
+            x_wins = True
+        elif game_area["b"][1] == "O":
+            o_wins = True
+    elif game_area["c"][1] == game_area["c"][3] == game_area["c"][5]:
+        if game_area["c"][1] == "X":
+            x_wins = True
+        elif game_area["c"][1] == "O":
+            o_wins = True
+    elif game_area["a"][1] == game_area["b"][1] == game_area["c"][1]:
+        if game_area["a"][1] == "X":
+            x_wins = True
+        elif game_area["a"][1] == "O":
+            o_wins = True
+    elif game_area["a"][3] == game_area["b"][3] == game_area["c"][3]:
+        if game_area["a"][3] == "X":
+            x_wins = True
+        elif game_area["a"][3] == "O":
+            o_wins = True
+    elif game_area["a"][5] == game_area["b"][5] == game_area["c"][5]:
+        if game_area["a"][5] == "X":
+            x_wins = True
+        elif game_area["a"][5] == "O":
+            o_wins = True
+    elif game_area["a"][1] == game_area["b"][3] == game_area["c"][5]:
+        if game_area["a"][1] == "X":
+            x_wins = True
+        elif game_area["a"][1] == "O":
+            o_wins = True
+    elif game_area["a"][5] == game_area["b"][3] == game_area["c"][1]:
+        if game_area["a"][5] == "X":
+            x_wins = True
+        elif game_area["a"][5] == "O":
+            o_wins = True
+    
+    if x_wins:
+        print("X wins!")
+        return True
+    elif o_wins:
+        print("O wins!")
+        return True
+    else: 
+        return False
 
-    user_coordinates = [*input("Player: X\nType a coordinates:  ").lower()]
+def play(mark):
+    user_coordinates = [*input(f"Player: {mark}\nType a coordinates:  ").lower()]
 
     user_row = user_coordinates[0]
     user_column = int(user_coordinates[1])
@@ -30,9 +74,20 @@ while end == False:
     elif user_column == 2:
         user_column = 5
 
-    mark = "X"
-
     affected_row = game_area[user_row]
     affected_row[user_column] = mark
 
-    print(f'{" ".join(game_area["a"])}\n{" ".join(game_area["b"])}\n{" ".join(game_area["c"])}')
+    print(f'{" ".join(game_area["a"])}\n{" ".join(game_area["b"])}\n{" ".join(game_area["c"])}\n')
+
+
+while end == False:
+
+    print(f'{" ".join(game_area["a"])}\n{" ".join(game_area["b"])}\n{" ".join(game_area["c"])}\n')
+
+    play("X")
+
+    end = is_it_end()
+
+    if end == False:
+        play("O")
+        end = is_it_end()
